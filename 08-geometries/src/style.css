@@ -1,0 +1,27 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set up body for full viewport and smooth rendering */
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Canvas should fill the viewport */
+.webgl {
+  display: block;
+  width: 100%;
+  height: 100%;
+  outline: none;
+  background: transparent;
+  outline: none;
+}

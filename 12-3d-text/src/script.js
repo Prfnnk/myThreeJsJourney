@@ -16,6 +16,12 @@ const cursor = {
   y: 0,
 };
 
+const targetCameraPosition = {
+  x: 1,
+  y: 1,
+  z: 4,
+};
+
 window.addEventListener('mousemove', (event) => {
   cursor.x = event.clientX / window.innerWidth - 0.5;
   cursor.y = (event.clientY / window.innerHeight - 0.5) * -1;
@@ -54,7 +60,6 @@ const meterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture });
 const text = new THREE.Mesh(textGeometry, meterial);
 
 textGeometry.computeBoundingBox();
-console.log(textGeometry.boundingBox);
 
 textGeometry.center();
 scene.add(text);
@@ -96,13 +101,6 @@ for (let i = 0; i < 100; i++) {
 }
 
 /**
- * Object
- */
-// const cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), new THREE.MeshBasicMaterial());
-
-// scene.add(cube);
-
-/**
  * Sizes
  */
 const sizes = {
@@ -131,7 +129,7 @@ window.addEventListener('resize', () => {
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
 camera.position.x = 1;
 camera.position.y = 1;
-camera.position.z = 4;
+camera.position.z = 3;
 scene.add(camera);
 
 // Controls
@@ -158,10 +156,37 @@ const tick = () => {
   // Update controls
   controls.update();
 
-  // Update camera
-  camera.position.x = cursor.x * 5;
-  //   camera.position.z = cursor.x * 5;
-  camera.position.y = cursor.y * 5;
+  // Update controls
+  controls.update();
+
+  // Target camera position based on cursor
+  targetCameraPosition.x = cursor.x * 6;
+  targetCameraPosition.y = cursor.y * 6;
+
+  // Zoom out based on distance from center
+  const distanceFromCenter = Math.sqrt(cursor.x * cursor.x + cursor.y * cursor.y);
+  const normalizedDistance = Math.min(distanceFromCenter / 0.707, 1); // 0.707 is the max distance in a square from center to corner -> normalize to [0, 1] -> Math.min to clamp -> help I hate maths.....
+  targetCameraPosition.z = 3 + normalizedDistance * 3; // 3 is the initial z position, we add up to 3 more units when cursor is at the corner
+
+  // Easing camera movement
+  // 0.05 - speed of the easing -> the less the slower
+  camera.position.x += (targetCameraPosition.x - camera.position.x) * 0.05;
+  camera.position.y += (targetCameraPosition.y - camera.position.y) * 0.05;
+  camera.position.z += (targetCameraPosition.z - camera.position.z) * 0.05;
+
+  // 🌊 Floating animation - волны
+  // Добавляем плавное покачивание вверх-вниз
+  camera.position.y += Math.sin(elapsedTime * 0.5) * 0.02;
+
+  //   // Добавляем легкое покачивание влево-вправо
+  //   camera.position.x += Math.cos(elapsedTime * 0.3) * 0.015;
+
+  //   // 🔄 Swing rotation - качание камеры
+  //   // Поворот влево-вправо (как будто качается на волнах)
+  //   camera.rotation.z = Math.sin(elapsedTime * 0.4) * 0.02;
+
+  //   // Легкий наклон вперед-назад
+  //   camera.rotation.x = Math.cos(elapsedTime * 0.3) * 0.01;
 
   // Render
   renderer.render(scene, camera);

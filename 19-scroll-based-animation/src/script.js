@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import GUI from 'lil-gui';
 import gsap from 'gsap';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+// import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 /**
  * Debug
@@ -40,11 +40,11 @@ const material = new THREE.MeshToonMaterial({
   gradientMap: gradientTexture,
 });
 
-// GLTFLoader
-const loader = new GLTFLoader();
-const myDonutSon = await loader.loadAsync('models/donut-big.glb');
-myDonutSon.scene.position.x = 2;
-myDonutSon.scene.scale.set(20, 20, 20);
+// GLTFLoader - return once i know how to bake
+// const loader = new GLTFLoader();
+// const myDonutSon = await loader.loadAsync('models/donut-big.glb');
+// myDonutSon.scene.position.x = 2;
+// myDonutSon.scene.scale.set(20, 20, 20);
 // myDonutSon.position.y = -4 * 0;
 
 scene.add(myDonutSon.scene);
@@ -63,9 +63,9 @@ mesh1.position.y = -objectsDistance * 0;
 mesh2.position.y = -objectsDistance * 1;
 mesh3.position.y = -objectsDistance * 2;
 
-scene.add(mesh2, mesh3);
+scene.add(mesh1, mesh2, mesh3);
 
-const sectionMeshes = [myDonutSon.scene, mesh2, mesh3];
+const sectionMeshes = [mesh1, mesh2, mesh3];
 
 /**
  * Lights

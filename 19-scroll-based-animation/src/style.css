@@ -1,0 +1,46 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set up body for full viewport and smooth rendering */
+/* body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* Canvas should fill the viewport */
+.webgl
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+
+
+.section
+{
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    font-family: 'Cabin', sans-serif;
+    color: #ffeded;
+    text-transform: uppercase;
+    font-size: 7vmin;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+section:nth-child(odd)
+{
+    justify-content: flex-end;
+}

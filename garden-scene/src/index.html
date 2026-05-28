@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Garden Scene</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- 3D Canvas -->
+    <canvas class="webgl"></canvas>
+
+    <!-- Title -->
+    <div class="title-container">
+      <h1 class="title">Veggie Garden</h1>
+      <p class="subtitle">Pick a seed • Click a hole to sow • Wait 5s • Click to harvest</p>
+    </div>
+
+    <!-- Seed picker -->
+    <div class="seed-picker">
+      <button class="seed-btn active" data-plant="radish">
+        <span class="seed-emoji">🌶️</span>
+        <span class="seed-label">Radish</span>
+      </button>
+      <button class="seed-btn" data-plant="carrot">
+        <span class="seed-emoji">🥕</span>
+        <span class="seed-label">Carrot</span>
+      </button>
+      <button class="seed-btn" data-plant="beet">
+        <span class="seed-emoji">🫐</span>
+        <span class="seed-label">Beet</span>
+      </button>
+    </div>
+
+    <!-- Basket / Counter -->
+    <div class="basket-container">
+      <div class="basket-anchor">🧺</div>
+      <div class="basket-info">
+        <div class="basket-label">Harvested</div>
+        <div class="harvest-total">0</div>
+        <div class="harvest-breakdown">
+          <div class="harvest-item">
+            <span>🌶️</span>
+            <span class="harvest-count" data-plant="radish">0</span>
+          </div>
+          <div class="harvest-item">
+            <span>🥕</span>
+            <span class="harvest-count" data-plant="carrot">0</span>
+          </div>
+          <div class="harvest-item">
+            <span>🫐</span>
+            <span class="harvest-count" data-plant="beet">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

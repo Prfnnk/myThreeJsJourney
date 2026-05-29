@@ -8,8 +8,6 @@ const SEED_FALL_MS = 600;
 
 const PLANTS = {
   radish: {
-    label: 'Radish',
-    emoji: '🌶️',
     rootColor: 0xe83b5a,
     tipColor: 0xf2f2f2,
     leafColor: 0x3aa84a,
@@ -17,8 +15,6 @@ const PLANTS = {
     shape: 'sphere',
   },
   carrot: {
-    label: 'Carrot',
-    emoji: '🥕',
     rootColor: 0xf08a2a,
     tipColor: 0xd96f17,
     leafColor: 0x2f8f3a,
@@ -26,8 +22,6 @@ const PLANTS = {
     shape: 'cone',
   },
   beet: {
-    label: 'Beet',
-    emoji: '🫐',
     rootColor: 0x8a1c5a,
     tipColor: 0x4a0f30,
     leafColor: 0x6abf3b,
@@ -385,7 +379,7 @@ export default class Garden {
           }
           const p = (t - 0.4) / 0.6;
           cell.plant.scale.setScalar(0.6 + p * 0.4);
-          cell.plant.position.y = -0.3 + p * 0.3;
+          cell.plant.position.y = -0.2 + p * 0.2;
         }
 
         if (t >= 1) {

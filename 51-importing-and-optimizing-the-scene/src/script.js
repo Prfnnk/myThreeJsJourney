@@ -6,8 +6,9 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 import firefliesVertexShader from './shaders/fireflies/vertex.glsl';
 import firefliesFragmentShader from './shaders/fireflies/fragment.glsl';
-
-console.log(firefliesVertexShader, firefliesFragmentShader);
+import portalVertexShader from './shaders/portal/vertex.glsl';
+import portalFragmentShader from './shaders/portal/fragment.glsl';
+import perlinNoise from './shaders/utils/perlinNoise.glsl';
 
 /**
  * Base
@@ -54,8 +55,30 @@ bakedTexture.colorSpace = THREE.SRGBColorSpace;
 
 // Materials
 const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
+
+debugObject.portalColorStart = '#c775c7';
+debugObject.portalColorEnd = '#cfb3ea';
+
+gui.addColor(debugObject, 'portalColorStart').onChange(() => {
+  portalLightMaterial.uniforms.uColorStart.value.set(debugObject.portalColorStart);
+});
+
+gui.addColor(debugObject, 'portalColorEnd').onChange(() => {
+  portalLightMaterial.uniforms.uColorEnd.value.set(debugObject.portalColorEnd);
+});
+
+// Portal light material
+const portalLightMaterial = new THREE.ShaderMaterial({
+  vertexShader: portalVertexShader,
+  fragmentShader: perlinNoise + portalFragmentShader,
+  uniforms: {
+    uTime: { value: 0 },
+    uColorStart: { value: new THREE.Color(debugObject.portalColorStart) },
+    uColorEnd: { value: new THREE.Color(debugObject.portalColorEnd) },
+  },
+});
+
 // Pole light material
-const portalLightMaterial = new THREE.MeshBasicMaterial({ color: '#CC5AE4FF' });
 const poleLightMaterial = new THREE.MeshBasicMaterial({ color: '#FF5F3DFF' });
 
 // Model
@@ -68,8 +91,6 @@ gltfLoader.load('portal.glb', (gltf) => {
   const portalLightMesh = gltf.scene.children.find((child) => child.name === 'PortalLight');
   const poleLightAMesh = gltf.scene.children.find((child) => child.name === 'PoleLightLeft');
   const poleLightBMesh = gltf.scene.children.find((child) => child.name === 'PoleLightRight');
-
-  console.log(portalLightMesh, poleLightAMesh, poleLightBMesh);
 
   // Apply materials
   bakedMesh.material = bakedMaterial;
@@ -179,6 +200,7 @@ const tick = () => {
 
   // Update materials
   firefliesMaterial.uniforms.uTime.value = elapsedTime;
+  portalLightMaterial.uniforms.uTime.value = elapsedTime;
 
   // Update controls
   controls.update();
